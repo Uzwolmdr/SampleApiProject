@@ -1,0 +1,211 @@
+import { useState } from 'react';
+import { loginAPI } from '../services/api';
+import './Login.css';
+
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    userCode: '',
+    password: '',
+  });
+  const [keepLoggedIn, setKeepLoggedIn] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError('');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await loginAPI(formData.email, formData.userCode, formData.password);
+      
+      if (response) {
+        // Handle successful login (redirect, store token, etc.)
+        console.log('Login response:', response);
+        // You can add navigation here
+      }
+    } catch (err) {
+      setError(err.message || 'Login failed. Please check your credentials.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-container">
+      {/* Top Left - GME Logo */}
+      <div className="gme-logo">
+        <div className="gme-logo-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" fill="#DC2626"/>
+            <path d="M20 10L25 18H33L27 24L30 32L20 26L10 32L13 24L7 18H15L20 10Z" fill="white" transform="rotate(-45 20 20)"/>
+          </svg>
+        </div>
+        <span className="gme-logo-text">GME</span>
+      </div>
+
+      {/* Split Layout */}
+      <div className="login-split-layout">
+        {/* Left Panel - Dark with 3D Graphic */}
+        <div className="login-left-panel">
+          <div className="gme-3d-graphic">
+            <div className="gme-layer layer-top">
+              <div className="layer-content">
+                <span className="layer-letter">G</span>
+                <div className="layer-dots">
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                </div>
+              </div>
+            </div>
+            <div className="gme-layer layer-middle">
+              <div className="layer-content">
+                <span className="layer-letter orange">M</span>
+                <div className="layer-dots">
+                  <span className="dot orange"></span>
+                  <span className="dot orange"></span>
+                  <span className="dot orange"></span>
+                </div>
+              </div>
+            </div>
+            <div className="gme-layer layer-bottom">
+              <div className="layer-content">
+                <span className="layer-letter">E</span>
+                <div className="layer-dots">
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Panel - White Login Form */}
+        <div className="login-right-panel">
+          <div className="login-form-container">
+            <h1 className="login-title">Admin Login</h1>
+            <p className="login-subtitle">Sign in to continue</p>
+
+            {error && (
+              <div className="alert alert-error" role="alert">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <div className="input-wrapper">
+                  <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10Z" fill="#9CA3AF"/>
+                    <path d="M10 12C5.58172 12 2 13.7909 2 16V20H18V16C18 13.7909 14.4183 12 10 12Z" fill="#9CA3AF"/>
+                  </svg>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="form-input"
+                    placeholder="neerajdh.krw@gmeremit.com"
+                    required
+                    autoComplete="email"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <div className="input-wrapper">
+                  <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 8V5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5V8H3V20H17V8H15ZM7 5C7 3.34315 8.34315 2 10 2C11.6569 2 13 3.34315 13 5V8H7V5ZM15 10V18H5V10H15Z" fill="#9CA3AF"/>
+                  </svg>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="form-input"
+                    placeholder="************"
+                    required
+                    autoComplete="current-password"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <div className="input-wrapper">
+                  <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4H16V16H4V4ZM2 4C2 2.89543 2.89543 2 4 2H16C17.1046 2 18 2.89543 18 4V16C18 17.1046 17.1046 18 16 18H4C2.89543 18 2 17.1046 2 16V4ZM6 6H14V8H6V6ZM6 10H14V12H6V10ZM6 14H10V16H6V14Z" fill="#9CA3AF"/>
+                  </svg>
+                  <input
+                    type="text"
+                    id="userCode"
+                    name="userCode"
+                    value={formData.userCode}
+                    onChange={handleChange}
+                    className="form-input"
+                    placeholder="123654"
+                    required
+                    autoComplete="username"
+                  />
+                </div>
+              </div>
+
+              <div className="form-options">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={keepLoggedIn}
+                    onChange={(e) => setKeepLoggedIn(e.target.checked)}
+                    className="checkbox-input"
+                  />
+                  <span className="checkbox-text">Keep me logged in</span>
+                </label>
+                <a href="#" className="forgot-password-link">Forgot password?</a>
+              </div>
+
+              <button
+                type="submit"
+                className="login-button"
+                disabled={loading}
+              >
+                {loading ? (
+                  <span className="button-loading">
+                    <span className="spinner"></span>
+                    Logging in...
+                  </span>
+                ) : (
+                  'Log in'
+                )}
+              </button>
+
+              <div className="support-link-container">
+                <a href="#" className="support-link">Contact GME Support</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Right - Copyright */}
+      <div className="copyright">
+        © 2025 gmeremit.com | All right reserved.
+      </div>
+    </div>
+  );
+};
+
+export default Login;
+

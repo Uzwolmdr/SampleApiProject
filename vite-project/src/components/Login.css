@@ -1,0 +1,463 @@
+.login-container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+/* Top Left - GME Logo */
+.gme-logo {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+}
+
+.gme-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gme-logo-text {
+  font-size: 28px;
+  font-weight: 700;
+  color: #DC2626;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Split Layout */
+.login-split-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Left Panel - Dark with 3D Graphic */
+.login-left-panel {
+  width: 50%;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+.gme-3d-graphic {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float3D 6s ease-in-out infinite;
+}
+
+@keyframes float3D {
+  0%, 100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotateY(5deg);
+  }
+}
+
+.gme-layer {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.layer-top {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  transform: translateZ(40px) rotateX(5deg);
+  z-index: 3;
+}
+
+.layer-middle {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f1b2e 100%);
+  transform: translateZ(20px) rotateX(2deg);
+  z-index: 2;
+  top: 20px;
+  left: 20px;
+}
+
+.layer-bottom {
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  transform: translateZ(0px);
+  z-index: 1;
+  top: 40px;
+  left: 40px;
+}
+
+.layer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.layer-letter {
+  font-size: 72px;
+  font-weight: 900;
+  color: #e2e8f0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.layer-letter.orange {
+  color: #ff6b35;
+  text-shadow: 0 2px 15px rgba(255, 107, 53, 0.4);
+}
+
+.layer-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4a5568;
+  box-shadow: 0 0 8px rgba(74, 85, 104, 0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.dot.orange {
+  background: #ff6b35;
+  box-shadow: 0 0 12px rgba(255, 107, 53, 0.8);
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Right Panel - White Login Form */
+.login-right-panel {
+  width: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 80px;
+  min-height: 100vh;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 450px;
+  animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.login-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  color: #4a5568;
+  margin: 0 0 40px 0;
+  font-weight: 400;
+}
+
+.login-form {
+  margin-top: 0;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-error {
+  background-color: #fee;
+  color: #c33;
+  border: 1px solid #fcc;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  font-size: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #2d3748;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #DC2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  accent-color: #DC2626;
+  border-radius: 4px;
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: #4a5568;
+  font-weight: 400;
+}
+
+.forgot-password-link {
+  color: #DC2626;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  color: #b91c1c;
+  text-decoration: underline;
+}
+
+.login-button {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #DC2626;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.button-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.support-link-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.support-link {
+  color: #DC2626;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.support-link:hover {
+  color: #b91c1c;
+  text-decoration: underline;
+}
+
+/* Bottom Right - Copyright */
+.copyright {
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+  font-size: 12px;
+  color: #4a5568;
+  z-index: 100;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .login-split-layout {
+    flex-direction: column;
+  }
+
+  .login-left-panel,
+  .login-right-panel {
+    width: 100%;
+    min-height: 50vh;
+  }
+
+  .login-right-panel {
+    padding: 40px 30px;
+  }
+
+  .gme-logo {
+    top: 20px;
+    left: 20px;
+  }
+
+  .copyright {
+    bottom: 15px;
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-container {
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 28px;
+  }
+
+  .form-input {
+    padding: 12px 14px 12px 44px;
+  }
+
+  .login-button {
+    padding: 14px;
+  }
+
+  .gme-3d-graphic {
+    width: 200px;
+    height: 200px;
+  }
+
+  .gme-layer {
+    width: 140px;
+    height: 140px;
+  }
+
+  .layer-letter {
+    font-size: 48px;
+  }
+}
