@@ -21,9 +21,6 @@ const Sidebar = ({ isOpen }) => {
   };
 
   const isActive = (path) => {
-    if (path === '/dashboard') {
-      return location.pathname === '/dashboard' || location.pathname === '/profile';
-    }
     return location.pathname === path;
   };
 
@@ -50,11 +47,7 @@ const Sidebar = ({ isOpen }) => {
                 if (item.hasDropdown) {
                   toggleExpand(item.id);
                 } else if (item.path) {
-                  if (item.path === '/dashboard') {
-                    navigate('/profile');
-                  } else {
-                    navigate(item.path);
-                  }
+                  navigate(item.path);
                 }
               }}
             >

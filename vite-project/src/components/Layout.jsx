@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import DashboardFooter from './DashboardFooter';
 import './Layout.css';
 
 const Layout = () => {
@@ -16,6 +17,7 @@ const Layout = () => {
           <Outlet />
         </main>
       </div>
+      <DashboardFooter />
     </div>
   );
 };
