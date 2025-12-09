@@ -102,6 +102,12 @@
   flex-shrink: 0;
 }
 
+.gme-logo-image-small {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
 .notification-title {
   font-size: 16px;
   font-weight: 600;

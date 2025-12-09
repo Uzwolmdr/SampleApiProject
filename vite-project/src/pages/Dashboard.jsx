@@ -52,10 +52,7 @@ const Dashboard = () => {
             <div className="notification-header">
               <div className="notification-logo-title">
                 <div className="gme-logo-small">
-                  <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="18" fill="#DC2626"/>
-                    <path d="M20 10L25 18H33L27 24L30 32L20 26L10 32L13 24L7 18H15L20 10Z" fill="white" transform="rotate(-45 20 20)"/>
-                  </svg>
+                  <img src="/GME-LOGO-HD.png" alt="GME Logo" className="gme-logo-image-small" />
                 </div>
                 <h3 className="notification-title">{notification.title}</h3>
               </div>

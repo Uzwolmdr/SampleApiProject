@@ -6,13 +6,7 @@ const Header = () => {
     <header className="app-header">
       <div className="header-left">
         <div className="gme-logo-header">
-          <div className="gme-logo-icon-header">
-            <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="18" fill="#DC2626"/>
-              <path d="M20 10L25 18H33L27 24L30 32L20 26L10 32L13 24L7 18H15L20 10Z" fill="white" transform="rotate(-45 20 20)"/>
-            </svg>
-          </div>
-          <span className="gme-logo-text-header">GME</span>
+          <img src="/GME-LOGO-HD.png" alt="GME Logo" className="gme-logo-image-header" />
         </div>
       </div>
 
