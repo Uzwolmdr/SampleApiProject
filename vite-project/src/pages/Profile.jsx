@@ -1,14 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getEmailAPI } from '../services/api';
 import './Profile.css';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('profile');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  // Get userCode from localStorage
+  const userCode = localStorage.getItem('userCode') || '123654';
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        console.log('Profile: Fetching email for userCode:', userCode);
+        const fetchedEmail = await getEmailAPI(userCode);
+        console.log('Profile: Fetched email result:', fetchedEmail);
+        
+        if (fetchedEmail && fetchedEmail !== 'null' && fetchedEmail.trim() !== '') {
+          setEmail(fetchedEmail);
+          console.log('Profile: Email set successfully:', fetchedEmail);
+        } else {
+          console.warn('Profile: Email is empty, null, or invalid');
+          setEmail('');
+        }
+      } catch (error) {
+        console.error('Profile: Failed to fetch email:', error);
+        console.error('Profile: Error details:', error.message);
+        setEmail('');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (userCode && userCode.trim() !== '') {
+      fetchEmail();
+    } else {
+      console.warn('Profile: No userCode found in localStorage');
+      setLoading(false);
+    }
+  }, [userCode]);
 
   // Sample user data - in real app, this would come from API/context
   const userData = {
     name: 'Neeraj Dhungana',
-    userCode: '123654',
-    email: 'neeraj.dhungana@gmeremit.com',
+    userCode: userCode,
+    email: email, // Email is fetched from GetEmail API
     fullName: 'Neeraj Dhungana',
     contactNumber: '+86342134234',
     country: 'Korea',
@@ -71,7 +108,9 @@ const Profile = () => {
               </div>
               <div className="detail-item">
                 <span className="detail-label">Email address:</span>
-                <span className="detail-value">{userData.email}</span>
+                <span className="detail-value">
+                  {loading ? 'Loading...' : (email && email.trim() !== '' ? email : 'N/A')}
+                </span>
               </div>
               <div className="detail-item">
                 <span className="detail-label">Contact Number:</span>

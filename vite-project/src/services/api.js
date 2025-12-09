@@ -84,6 +84,72 @@ export const getVersionAPI = async () => {
   }
 };
 
+export const getEmailAPI = async (userCode) => {
+  try {
+    console.log('Calling GetEmail API with userCode:', userCode);
+    const requestBody = {
+      UserCode: userCode,
+    };
+    console.log('Request body:', JSON.stringify(requestBody));
+    
+    const response = await fetch(`${API_BASE_URL}/Login/GetEmail`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    console.log('GetEmail API response status:', response.status, response.statusText);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('GetEmail API error response:', errorText);
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    }
+
+    // GetEmail returns a string directly (Ok(email) in C#)
+    // Read as text first (ASP.NET Core may serialize strings as JSON strings)
+    const textData = await response.text();
+    console.log('GetEmail API raw response:', textData);
+    console.log('GetEmail API response length:', textData?.length);
+    
+    if (!textData || textData.trim() === '') {
+      console.warn('GetEmail API returned empty response');
+      return null;
+    }
+    
+    // Try to parse as JSON first (ASP.NET Core might serialize strings as JSON)
+    let email = null;
+    try {
+      const parsed = JSON.parse(textData);
+      console.log('GetEmail API parsed JSON:', parsed);
+      email = parsed;
+    } catch (parseError) {
+      // Not JSON, use as plain text
+      console.log('GetEmail API: Not JSON, using as text');
+      email = textData;
+    }
+    
+    // Convert to string and clean
+    let cleanEmail = String(email).trim();
+    // Remove surrounding quotes if present
+    cleanEmail = cleanEmail.replace(/^["']|["']$/g, '');
+    console.log('GetEmail API cleaned response:', cleanEmail);
+    
+    // Handle null, empty, or invalid responses
+    if (cleanEmail === 'null' || cleanEmail === '' || cleanEmail === 'undefined' || cleanEmail === null) {
+      console.warn('GetEmail API returned null or empty after cleaning');
+      return null;
+    }
+    
+    return cleanEmail;
+  } catch (error) {
+    console.error('GetEmail API error:', error);
+    throw error;
+  }
+};
+
 export const changePasswordAPI = async (email, userCode, oldPassword, newPassword) => {
   try {
     const response = await fetch(`${API_BASE_URL}/Login/ChangePassword`, {
