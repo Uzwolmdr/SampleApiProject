@@ -11,6 +11,8 @@ const Login = () => {
   const [keepLoggedIn, setKeepLoggedIn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,23 +21,59 @@ const Login = () => {
       [name]: value,
     }));
     setError('');
+    setResponseMessage('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setResponseMessage('');
     setLoading(true);
 
     try {
       const response = await loginAPI(formData.email, formData.userCode, formData.password);
       
       if (response) {
-        // Handle successful login (redirect, store token, etc.)
         console.log('Login response:', response);
-        // You can add navigation here
+        
+        // Extract ResponseDescription and ResponseCode from the API response
+        const responseCode = response.ResponseCode || response.responseCode;
+        const responseDescription = response.ResponseDescription || response.responseDescription;
+        
+        if (responseDescription) {
+          setResponseMessage(responseDescription);
+          setIsSuccess(responseCode === '100' || responseCode === 100);
+        } else {
+          // If no ResponseDescription, check if login was successful
+          setIsSuccess(responseCode === '100' || responseCode === 100);
+          setResponseMessage(responseCode === '100' || responseCode === 100 
+            ? 'Login successful!' 
+            : 'Login failed. Please check your credentials.');
+        }
+        
+        // Handle successful login (redirect, store token, etc.)
+        if (responseCode === '100' || responseCode === 100) {
+          // You can add navigation here
+        }
       }
     } catch (err) {
-      setError(err.message || 'Login failed. Please check your credentials.');
+      console.error('Login error:', err);
+      
+      // Check if error contains ResponseDescription from API
+      if (err.data) {
+        const responseCode = err.data.ResponseCode || err.data.responseCode;
+        const responseDescription = err.data.ResponseDescription || err.data.responseDescription;
+        
+        if (responseDescription) {
+          setResponseMessage(responseDescription);
+          setIsSuccess(responseCode === '100' || responseCode === 100);
+        } else {
+          setError(err.message || 'Login failed. Please check your credentials and ensure the API server is running.');
+        }
+      } else {
+        // Network or other errors
+        setError(err.message || 'Login failed. Please check your credentials and ensure the API server is running.');
+      }
     } finally {
       setLoading(false);
     }
@@ -104,7 +142,13 @@ const Login = () => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="login-form">
+            {responseMessage && (
+              <div className={`alert ${isSuccess ? 'alert-success' : 'alert-error'}`} role="alert">
+                {responseMessage}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="login-form" autoComplete="off">
               <div className="form-group">
                 <div className="input-wrapper">
                   <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +162,7 @@ const Login = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="neerajdh.krw@gmeremit.com"
+                    placeholder="Email Address"
                     required
                     autoComplete="email"
                   />
@@ -137,9 +181,11 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="************"
+                    placeholder="Password"
                     required
-                    autoComplete="current-password"
+                    autoComplete="new-password"
+                    readOnly
+                    onFocus={(e) => e.target.removeAttribute('readonly')}
                   />
                 </div>
               </div>
@@ -156,9 +202,11 @@ const Login = () => {
                     value={formData.userCode}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="123654"
+                    placeholder="UserCode"
                     required
-                    autoComplete="username"
+                    autoComplete="off"
+                    readOnly
+                    onFocus={(e) => e.target.removeAttribute('readonly')}
                   />
                 </div>
               </div>

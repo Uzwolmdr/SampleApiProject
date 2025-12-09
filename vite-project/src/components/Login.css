@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Top Left - GME Logo */
@@ -53,8 +53,8 @@
 
 .gme-3d-graphic {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 180px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,8 +72,8 @@
 
 .gme-layer {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -92,27 +92,27 @@
   background: linear-gradient(135deg, #1e3a5f 0%, #0f1b2e 100%);
   transform: translateZ(20px) rotateX(2deg);
   z-index: 2;
-  top: 20px;
-  left: 20px;
+  top: 12px;
+  left: 12px;
 }
 
 .layer-bottom {
   background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
   transform: translateZ(0px);
   z-index: 1;
-  top: 40px;
-  left: 40px;
+  top: 24px;
+  left: 24px;
 }
 
 .layer-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .layer-letter {
-  font-size: 72px;
+  font-size: 48px;
   font-weight: 900;
   color: #e2e8f0;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -130,11 +130,11 @@
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #4a5568;
-  box-shadow: 0 0 8px rgba(74, 85, 104, 0.6);
+  box-shadow: 0 0 6px rgba(74, 85, 104, 0.6);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -235,8 +235,14 @@
 
 .alert-error {
   background-color: #fee;
-  color: #c33;
+  color: #dc2626;
   border: 1px solid #fcc;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
 }
 
 .form-group {
@@ -448,16 +454,16 @@
   }
 
   .gme-3d-graphic {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
 
   .gme-layer {
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
   }
 
   .layer-letter {
-    font-size: 48px;
+    font-size: 36px;
   }
 }

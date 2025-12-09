@@ -14,14 +14,42 @@ export const loginAPI = async (email, userCode, password) => {
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Try to parse response even if status is not OK
+    let data;
+    try {
+      const responseText = await response.text();
+      if (responseText) {
+        data = JSON.parse(responseText);
+      }
+    } catch (parseError) {
+      console.error('Failed to parse response:', parseError);
     }
 
-    const data = await response.json();
-    return data;
+    // If response is not OK and we have error data, throw with the data
+    if (!response.ok) {
+      const error = new Error(data?.ResponseDescription || data?.message || `HTTP error! status: ${response.status}`);
+      error.response = response;
+      error.data = data;
+      throw error;
+    }
+
+    // Return the data (which may contain ResponseCode and ResponseDescription)
+    return data || {};
   } catch (error) {
     console.error('Login API error:', error);
+    
+    // If it's a network error, throw a user-friendly message
+    if (error.message === 'Failed to fetch' || error.message.includes('NetworkError') || error.name === 'TypeError') {
+      throw new Error('Unable to connect to the server. Please make sure the API is running on http://localhost:5099');
+    }
+    
+    // If we have response data with ResponseDescription, preserve it
+    if (error.data) {
+      const enhancedError = new Error(error.data.ResponseDescription || error.data.responseDescription || error.message);
+      enhancedError.data = error.data;
+      throw enhancedError;
+    }
+    
     throw error;
   }
 };
