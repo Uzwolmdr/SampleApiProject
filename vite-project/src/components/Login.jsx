@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loginAPI } from '../services/api';
 import './Login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     userCode: '',
@@ -53,7 +55,10 @@ const Login = () => {
         
         // Handle successful login (redirect, store token, etc.)
         if (responseCode === '100' || responseCode === 100) {
-          // You can add navigation here
+          // Redirect to profile page after a short delay to show success message
+          setTimeout(() => {
+            navigate('/profile');
+          }, 1000);
         }
       }
     } catch (err) {
