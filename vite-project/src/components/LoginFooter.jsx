@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import './DashboardFooter.css';
+import './LoginFooter.css';
 
 const API_BASE_URL = 'http://localhost:5099/api';
 
-const DashboardFooter = () => {
+const LoginFooter = () => {
   const [version, setVersion] = useState('1.0');
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchVersion = async () => {
@@ -35,8 +34,6 @@ const DashboardFooter = () => {
       } catch (error) {
         console.error('Failed to fetch version:', error);
         // Keep default version on error
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -44,16 +41,16 @@ const DashboardFooter = () => {
   }, []);
 
   return (
-    <footer className="dashboard-footer">
-      <div className="footer-left">
-        <span className="footer-version">Version {version}</span>
+    <footer className="login-footer">
+      <div className="login-footer-left">
+        <span className="login-footer-version">Version {version}</span>
       </div>
-      <div className="footer-right">
-        <span className="footer-copyright">© 2025 gmeremit.com | All right reserved.</span>
+      <div className="login-footer-right">
+        <span className="login-footer-copyright">© 2025 gmeremit.com | All right reserved.</span>
       </div>
     </footer>
   );
 };
 
-export default DashboardFooter;
+export default LoginFooter;
 

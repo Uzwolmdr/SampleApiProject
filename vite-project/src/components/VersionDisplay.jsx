@@ -10,7 +10,16 @@ const VersionDisplay = () => {
     const fetchVersion = async () => {
       try {
         const response = await getVersionAPI();
-        if (response?.Data?.version) {
+        // GetVersion returns a string directly
+        if (response && typeof response === 'string') {
+          // Remove any quotes and trim whitespace
+          let cleanVersion = response.trim();
+          cleanVersion = cleanVersion.replace(/^["']|["']$/g, '');
+          if (cleanVersion) {
+            setVersion(cleanVersion);
+            console.log('Version fetched:', cleanVersion);
+          }
+        } else if (response?.Data?.version) {
           setVersion(response.Data.version);
         }
       } catch (error) {

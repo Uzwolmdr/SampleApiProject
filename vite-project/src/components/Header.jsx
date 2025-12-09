@@ -1,3 +1,4 @@
+import AvatarDropdown from './AvatarDropdown';
 import './Header.css';
 
 const Header = () => {
@@ -45,15 +46,7 @@ const Header = () => {
           <span className="notification-badge">21</span>
         </div>
 
-        <div className="header-item profile-picture">
-          <div className="avatar">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="16" r="16" fill="#E2E8F0"/>
-              <path d="M16 10C17.6569 10 19 11.3431 19 13C19 14.6569 17.6569 16 16 16C14.3431 16 13 14.6569 13 13C13 11.3431 14.3431 10 16 10Z" fill="#4A5568"/>
-              <path d="M16 18C12.6863 18 10 20.6863 10 24H22C22 20.6863 19.3137 18 16 18Z" fill="#4A5568"/>
-            </svg>
-          </div>
-        </div>
+        <AvatarDropdown />
       </div>
     </header>
   );

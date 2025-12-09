@@ -55,9 +55,13 @@ const Login = () => {
         
         // Handle successful login (redirect, store token, etc.)
         if (responseCode === '100' || responseCode === 100) {
-          // Redirect to profile page after a short delay to show success message
+          // Store user info in localStorage for use in other pages
+          localStorage.setItem('userEmail', formData.email);
+          localStorage.setItem('userCode', formData.userCode);
+          
+          // Redirect to dashboard page after a short delay to show success message
           setTimeout(() => {
-            navigate('/profile');
+            navigate('/dashboard');
           }, 1000);
         }
       }
@@ -250,11 +254,6 @@ const Login = () => {
             </form>
           </div>
         </div>
-      </div>
-
-      {/* Bottom Right - Copyright */}
-      <div className="copyright">
-        © 2025 gmeremit.com | All right reserved.
       </div>
     </div>
   );
